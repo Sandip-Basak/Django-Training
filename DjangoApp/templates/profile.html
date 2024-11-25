@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<meta name="Description" content="Enter your description here"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+<link rel="stylesheet" href="assets/css/style.css">
+<title>Profile</title>
+</head>
+<body>
+    <h1 class="text-center">Welcome {{ request.user.first_name }} {{ request.user.last_name }}</h1>
+    <div class="container my-3">
+        <a href="/signout" class="btn btn-danger">SIGN OUT</a>
+        <a href="/employee/add" class="btn btn-success">INSERT DATA</a>
+    </div>
+
+    <div class="container my-2 border border-1 border-dark">
+        <div class="row text-center p-1">
+            <div class="col-2 border border-1 border-dark">
+                Employee ID
+            </div>
+            <div class="col-2 border border-1 border-dark">
+                Name
+            </div>
+            <div class="col-2 border border-1 border-dark">
+                Age
+            </div>
+            <div class="col-2 border border-1 border-dark">
+                Job Description
+            </div>
+            <div class="col-2 border border-1 border-dark">
+                Profile
+            </div>
+            <div class="col-2 border border-1 border-dark">
+                Action
+            </div>
+        </div>
+        {% for e in employee %}
+        <div class="row text-center p-1" onclick="employeeUpdate({{ e.eid }})">
+            <div class="col-2 border border-1 border-dark  align-content-center">
+                {{ e.eid }}
+            </div>
+            <div class="col-2 border border-1 border-dark  align-content-center">
+                {{ e.name }}
+            </div>
+            <div class="col-2 border border-1 border-dark  align-content-center">
+                {{ e.age }}
+            </div>
+            <div class="col-2 border border-1 border-dark  align-content-center">
+                {{ e.jobDescription }}
+            </div>
+            <div class="col-2 border border-1 border-dark  align-content-center">
+                <img src="{{ e.profile_photo.url }}" alt="" class="img-fluid w-50">
+            </div>
+            <div class="col-2 border border-1 border-dark align-content-center">
+                <a href="/employee/delete/{{ e.eid }}" class="btn btn-outline-danger">Delete</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <script>
+        function employeeUpdate(id){
+            location.assign("/employee/update/"+id);
+        }
+    </script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.0/js/bootstrap.min.js"></script>
+</body>
+</html>
